@@ -5,6 +5,8 @@ import Dashboard from "./pages/Dashboard";
 import Students from "./pages/Students";
 import Teachers from "./pages/Teachers";
 import Homework from "./pages/Homework";
+import Login from "./pages/Login";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
 
@@ -18,7 +20,11 @@ function App() {
 
           <Route
             path="/"
-            element={<Dashboard />}
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
           />
 
           <Route
@@ -35,6 +41,8 @@ function App() {
             path="/homework"
             element={<Homework />}
           />
+
+          <Route path="/login" element={<Login />} />
 
         </Routes>
 

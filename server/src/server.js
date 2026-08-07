@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 5000;
 const createAdmin = require("./utils/createAdmin");
 
 sequelize
-  .sync({ alter: true })
+sequelize.sync({ alter: true })
   .then(async () => {
     await createAdmin();
 
