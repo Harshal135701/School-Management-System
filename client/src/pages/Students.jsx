@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import api from "../api/axios";
 
 function Students() {
-
     const [students, setStudents] = useState([]);
+    const [editId, setEditId] = useState(null);
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -14,39 +14,63 @@ function Students() {
         address: ""
     });
 
-
     useEffect(() => {
-
         api.get("/students")
             .then((response) => {
-
                 setStudents(response.data);
-
             })
             .catch((error) => {
-
                 console.log(error);
-
             });
-
     }, []);
 
     const handleChange = (e) => {
-
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         });
-
     };
 
     const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await api.post("/students", formData);
+            setFormData({
+                firstName: "",
+                lastName: "",
+                class: "",
+                section: "",
+                parentName: "",
+                parentMobile: "",
+                address: ""
+            });
+
+            const response = await api.get("/students");
+            setStudents(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const handleDelete = async (id) => {
+        try {
+            await api.delete(`/students/${id}`);
+            const response = await api.get("/students");
+            setStudents(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const handleUpdate = async (e) => {
 
         e.preventDefault();
 
         try {
 
-            await api.post("/students", formData);
+            await api.put(`/students/${editId}`, formData);
+
+            setEditId(null);
 
             setFormData({
                 firstName: "",
@@ -72,19 +96,16 @@ function Students() {
 
     };
 
-
     return (
-
         <div className="space-y-6">
             <h1 className="text-3xl font-bold">
                 Students Management
             </h1>
 
+            {/* Form to Add Student */}
             <form
-                onSubmit={handleSubmit}
-                className="bg-white shadow rounded-lg p-6 grid grid-cols-1 md:grid-cols-2 gap-4"
+                onSubmit={editId ? handleUpdate : handleSubmit}
             >
-
                 <input
                     name="firstName"
                     placeholder="First Name"
@@ -92,7 +113,6 @@ function Students() {
                     onChange={handleChange}
                     className="border p-2 rounded"
                 />
-
 
                 <input
                     name="lastName"
@@ -102,7 +122,6 @@ function Students() {
                     className="border p-2 rounded"
                 />
 
-
                 <input
                     name="class"
                     placeholder="Class"
@@ -110,7 +129,6 @@ function Students() {
                     onChange={handleChange}
                     className="border p-2 rounded"
                 />
-
 
                 <input
                     name="section"
@@ -120,7 +138,6 @@ function Students() {
                     className="border p-2 rounded"
                 />
 
-
                 <input
                     name="parentName"
                     placeholder="Parent Name"
@@ -128,7 +145,6 @@ function Students() {
                     onChange={handleChange}
                     className="border p-2 rounded"
                 />
-
 
                 <input
                     name="parentMobile"
@@ -138,78 +154,77 @@ function Students() {
                     className="border p-2 rounded"
                 />
 
-
                 <input
                     name="address"
                     placeholder="Address"
                     value={formData.address}
                     onChange={handleChange}
-                    className="border p-2 rounded"
+                    className="border p-2 rounded md:col-span-2"
                 />
 
-
-                <button
-                    type="submit"
-                    className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
-                >
-                    Add Student
-                </button>
-
+                {/* Submit Button */}
+                <div className="md:col-span-2">
+                    <button
+                        type="submit"
+                        className="bg-blue-600 text-white px-4 py-2 rounded font-semibold"
+                    >
+                        {editId ? "Update Student" : "Add Student"}
+                    </button>
+                </div>
             </form>
 
-
+            {/* Students Table */}
             <table className="w-full bg-white shadow rounded-lg overflow-hidden">
-
                 <thead>
-
                     <tr>
                         <th className="p-3 border">ID</th>
                         <th className="p-3 border">Name</th>
                         <th className="p-3 border">Class</th>
                         <th className="p-3 border">Section</th>
+                        <th className="p-3 border">Action</th>
                     </tr>
-
                 </thead>
-
-
                 <tbody>
+                    {students.map((student) => (
+                        <tr key={student.id}>
+                            <td className="p-3 border">{student.id}</td>
+                            <td className="p-3 border">{student.firstName} {student.lastName}</td>
+                            <td className="p-3 border">{student.class}</td>
+                            <td className="p-3 border">{student.section}</td>
+                            <td className="p-3 border text-center">
+                                <button
+                                    onClick={() => handleDelete(student.id)}
+                                    className="bg-red-600 text-white px-3 py-1 rounded"
+                                >
+                                    Delete
+                                </button>
+                                <button
+                                    onClick={() => {
 
-                    {
-                        students.map((student) => (
+                                        setEditId(student.id);
 
-                            <tr key={student.id}>
+                                        setFormData({
+                                            firstName: student.firstName,
+                                            lastName: student.lastName,
+                                            class: student.class,
+                                            section: student.section,
+                                            parentName: student.parentName,
+                                            parentMobile: student.parentMobile,
+                                            address: student.address
+                                        });
 
-                                <td className="p-3 border">
-                                    {student.id}
-                                </td>
-
-                                <td className="p-3 border">
-                                    {student.firstName} {student.lastName}
-                                </td>
-
-                                <td className="p-3 border">
-                                    {student.class}
-                                </td>
-
-                                <td className="p-3 border">
-                                    {student.section}
-                                </td>
-
-                            </tr>
-
-                        ))
-                    }
-
+                                    }}
+                                    className="bg-yellow-500 text-white px-3 py-1 rounded mr-2"
+                                >
+                                    Edit
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
-
-
             </table>
-
-
         </div>
-
     );
-
 }
 
 export default Students;
