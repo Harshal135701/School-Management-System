@@ -14,6 +14,8 @@ function Homework() {
     dueDate: ""
   });
 
+  const [file, setFile] = useState(null);
+
 
   useEffect(() => {
 
@@ -51,38 +53,39 @@ function Homework() {
   };
 
 
-
   const handleSubmit = async (e) => {
-
     e.preventDefault();
 
-
     try {
+      const data = new FormData();
 
-      await api.post("/homework", formData);
+      data.append("title", formData.title);
+      data.append("description", formData.description);
+      data.append("subject", formData.subject);
+      data.append("class", formData.class);
+      data.append("dueDate", formData.dueDate);
 
+      if (file) {
+        data.append("attachment", file);
+      }
+
+      await api.post("/homework", data);
 
       setFormData({
         title: "",
         description: "",
         subject: "",
         class: "",
-        dueDate: ""
+        dueDate: "",
       });
 
+      setFile(null);
 
       fetchHomework();
-
-
     } catch (error) {
-
       console.log(error);
-
     }
-
   };
-
-
 
   const handleDelete = async (id) => {
 
@@ -101,35 +104,39 @@ function Homework() {
   };
 
   const handleUpdate = async (e) => {
-
     e.preventDefault();
 
     try {
+      const data = new FormData();
 
-      await api.put(`/homework/${editId}`, formData);
+      data.append("title", formData.title);
+      data.append("description", formData.description);
+      data.append("subject", formData.subject);
+      data.append("class", formData.class);
+      data.append("dueDate", formData.dueDate);
 
+      if (file) {
+        data.append("attachment", file);
+      }
+
+      await api.put(`/homework/${editId}`, data);
 
       setEditId(null);
-
 
       setFormData({
         title: "",
         description: "",
         subject: "",
         class: "",
-        dueDate: ""
+        dueDate: "",
       });
 
+      setFile(null);
 
       fetchHomework();
-
-
     } catch (error) {
-
       console.log(error);
-
     }
-
   };
 
   const handlePublish = async (id) => {
@@ -190,6 +197,13 @@ function Homework() {
           className="border p-2 rounded"
         />
 
+        <input
+          type="file"
+          accept=".pdf,image/*,video/*"
+          onChange={(e) => setFile(e.target.files[0])}
+          className="border p-2 rounded"
+        />
+
         <button
           type="submit"
           className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
@@ -207,6 +221,7 @@ function Homework() {
             <th className="p-3 border">Due Date</th>
             <th className="p-3 border">Status</th>
             <th className="p-3 border">Action</th>
+            <th className="p-3 border">Attachment</th>
           </tr>
         </thead>
 
@@ -266,6 +281,21 @@ function Homework() {
                 >
                   Delete
                 </button>
+              </td>
+
+              <td className="p-3 border">
+                {hw.attachment ? (
+                  <a
+                    href={`http://localhost:5000/uploads/${hw.attachment}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 hover:underline"
+                  >
+                    📄 View File
+                  </a>
+                ) : (
+                  <span className="text-gray-500">No Attachment</span>
+                )}
               </td>
             </tr>
           ))}

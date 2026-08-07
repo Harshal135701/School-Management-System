@@ -37,7 +37,10 @@ const updateHomework = async (req, res) => {
     }
 
 
-    await homework.update(req.body);
+    await homework.update({
+      ...req.body,
+      attachment: req.file ? req.file.filename : homework.attachment,
+    });
 
 
     res.json(homework);
