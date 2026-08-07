@@ -140,25 +140,25 @@ No direct download button is provided for attachments.
 
 ## Dashboard
 
-![Dashboard](screenshots/dashboardAdmin.png)
+![Dashboard](screenShots/dashboardAdmin.png)
 
 ## Homework Management
 
-![Homework Portal](screenshots/homeWorkModel.png)
+![Homework Portal](screenShots/homeWorkModel.png)
 
 
 ## Student Management
 
-![Students](screenshots/studentModel.png)
+![Students](screenShots/studentModel.png)
 
 
 ## Parent Portal
 
-![Parent Portal](screenshots/parentPortal.png)
+![Parent Portal](screenShots/parentPortal.png)
 
 ## Teacher Management
 
-![Teacher](screenshots/teacherModel.png)
+![Teacher](screenShots/teacherModel.png)
 
 # 🛠️ Technology Stack
 
@@ -217,7 +217,7 @@ School-Management-System
 ## Clone Repository
 
 ```bash
-git clone <https://github.com/Harshal135701/School-Management-System.git>
+git clone https://github.com/Harshal135701/School-Management-System.git
 
 cd School-Management-System
 ```
