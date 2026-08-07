@@ -1,0 +1,477 @@
+{
+  "info": {
+    "_postman_id": "e61a8422-82aa-42ef-a0f0-52b4dd0288aa",
+    "name": "Mini School Management System API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "48468895",
+    "_collection_link": "https://go.postman.co/collection/48468895-e61a8422-82aa-42ef-a0f0-52b4dd0288aa?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"admin@gmail.com\",\r\n  \"password\": \"admin123\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "item": [
+        {
+          "name": "Dashboard_Page",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/dashboard/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "dashboard",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Students",
+      "item": [
+        {
+          "name": "get_Students",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/students",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "students"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "add_Students",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"firstName\": \"Rahul\",\r\n  \"lastName\": \"Sharma\",\r\n  \"class\": \"10\",\r\n  \"section\": \"A\",\r\n  \"parentName\": \"Amit Sharma\",\r\n  \"parentMobile\": \"9876543210\",\r\n  \"address\": \"Pune\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/students",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "students"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update_Student",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"firstName\": \"Rahul Updated\",\r\n  \"lastName\": \"Sharma\",\r\n  \"class\": \"10\",\r\n  \"section\": \"B\",\r\n  \"parentName\": \"Amit Sharma\",\r\n  \"parentMobile\": \"9876543210\",\r\n  \"address\": \"Mumbai\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/students/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "students",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete_Student",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/students/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "students",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Teachers",
+      "item": [
+        {
+          "name": "get_Teachers",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/teachers",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "teachers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "add_Teacher",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"John Smith\",\r\n  \"email\": \"john@gmail.com\",\r\n  \"mobileNumber\": \"9876543210\",\r\n  \"subject\": \"Mathematics\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/teachers",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "teachers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update_Teacher",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"John Updated\",\r\n  \"subject\": \"Physics\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/teachers/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "teachers",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete_Teacher",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/teachers/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "teachers",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Homework",
+      "item": [
+        {
+          "name": "get_Homework",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/homework",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "homework"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get_Parent_Homework",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/homework/parent",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "homework",
+                "parent"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "add_Homework",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "react",
+                  "type": "text",
+                  "uuid": "01ac968a-f063-4b91-805e-2a531773f6a5"
+                },
+                {
+                  "key": "description",
+                  "value": "react lang",
+                  "type": "text",
+                  "uuid": "6927d53e-67c8-4755-874f-b38166faed86"
+                },
+                {
+                  "key": "subject",
+                  "value": "react sub",
+                  "type": "text",
+                  "uuid": "5e8d7119-13cd-4574-8875-4387e87ab3ff"
+                },
+                {
+                  "key": "class",
+                  "value": "BE",
+                  "type": "text",
+                  "uuid": "5a138f4a-27e1-47e0-85f6-7054ecea5a3c"
+                },
+                {
+                  "key": "dueDate",
+                  "value": "12/12/2005",
+                  "type": "text",
+                  "uuid": "ae6322b5-89ef-4136-8bad-d0af597cb69b"
+                },
+                {
+                  "key": "attachment",
+                  "value": "no",
+                  "type": "text",
+                  "uuid": "09da9a38-3cfb-4e8b-a8dc-63489dee959d"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/homework",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "homework"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "publish_Homework",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/homework/1/publish",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "homework",
+                "1",
+                "publish"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete_Homework",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5000/api/homework/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "homework",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
