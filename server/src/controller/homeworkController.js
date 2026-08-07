@@ -21,7 +21,77 @@ const getHomework = async (req, res) => {
   res.json(homework);
 };
 
+const updateHomework = async (req, res) => {
+
+  try {
+
+    const homework = await Homework.findByPk(req.params.id);
+
+
+    if (!homework) {
+
+      return res.status(404).json({
+        message: "Homework not found"
+      });
+
+    }
+
+
+    await homework.update(req.body);
+
+
+    res.json(homework);
+
+
+  } catch (error) {
+
+    res.status(500).json({
+      message: error.message
+    });
+
+  }
+
+};
+
+
+
+const deleteHomework = async (req, res) => {
+
+  try {
+
+    const homework = await Homework.findByPk(req.params.id);
+
+
+    if (!homework) {
+
+      return res.status(404).json({
+        message: "Homework not found"
+      });
+
+    }
+
+
+    await homework.destroy();
+
+
+    res.json({
+      message: "Homework deleted successfully"
+    });
+
+
+  } catch (error) {
+
+    res.status(500).json({
+      message: error.message
+    });
+
+  }
+
+};
+
 module.exports = {
   addHomework,
   getHomework,
+  updateHomework,
+  deleteHomework
 };

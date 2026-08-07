@@ -4,6 +4,7 @@ import api from "../api/axios";
 function Homework() {
 
   const [homeworks, setHomeworks] = useState([]);
+  const [editId, setEditId] = useState(null);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -83,16 +84,72 @@ function Homework() {
 
 
 
+  const handleDelete = async (id) => {
+
+    try {
+
+      await api.delete(`/homework/${id}`);
+
+      fetchHomework();
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  };
+
+  const handleUpdate = async (e) => {
+
+    e.preventDefault();
+
+    try {
+
+      await api.put(`/homework/${editId}`, formData);
+
+
+      setEditId(null);
+
+
+      setFormData({
+        title: "",
+        description: "",
+        subject: "",
+        class: "",
+        dueDate: ""
+      });
+
+
+      fetchHomework();
+
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  };
+
+
+
   return (
 
-    <div>
+    <div className="space-y-6">
 
-      <h1>
+
+      <h1 className="text-3xl font-bold">
         Homework Management
       </h1>
 
 
-      <form onSubmit={handleSubmit}>
+
+
+      <form
+        onSubmit={editId ? handleUpdate : handleSubmit}
+        className="bg-white shadow rounded-lg p-6 grid grid-cols-1 md:grid-cols-2 gap-4"
+      >
 
 
         <input
@@ -100,6 +157,7 @@ function Homework() {
           placeholder="Homework Title"
           value={formData.title}
           onChange={handleChange}
+          className="border p-2 rounded"
         />
 
 
@@ -108,21 +166,16 @@ function Homework() {
           placeholder="Description"
           value={formData.description}
           onChange={handleChange}
+          className="border p-2 rounded"
         />
 
-
-        <input
-          type="date"
-          name="dueDate"
-          value={formData.dueDate}
-          onChange={handleChange}
-        />
 
         <input
           name="subject"
           placeholder="Subject"
           value={formData.subject}
           onChange={handleChange}
+          className="border p-2 rounded"
         />
 
 
@@ -131,11 +184,25 @@ function Homework() {
           placeholder="Class"
           value={formData.class}
           onChange={handleChange}
+          className="border p-2 rounded"
         />
 
 
-        <button type="submit">
-          Add Homework
+        <input
+          type="date"
+          name="dueDate"
+          value={formData.dueDate}
+          onChange={handleChange}
+          className="border p-2 rounded"
+        />
+
+
+
+        <button
+          type="submit"
+          className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+        >
+          {editId ? "Update Homework" : "Add Homework"}
         </button>
 
 
@@ -143,39 +210,112 @@ function Homework() {
 
 
 
-      <table border="1">
+
+
+      <table className="w-full bg-white shadow rounded-lg overflow-hidden">
+
 
         <thead>
 
           <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Due Date</th>
+
+            <th className="p-3 border">
+              ID
+            </th>
+
+            <th className="p-3 border">
+              Title
+            </th>
+
+            <th className="p-3 border">
+              Description
+            </th>
+
+            <th className="p-3 border">
+              Due Date
+            </th>
+
+            <th className="p-3 border">
+              Action
+            </th>
+
           </tr>
 
         </thead>
 
 
+
+
         <tbody>
+
 
           {
             homeworks.map((hw) => (
 
               <tr key={hw.id}>
 
-                <td>{hw.id}</td>
 
-                <td>{hw.title}</td>
+                <td className="p-3 border">
+                  {hw.id}
+                </td>
 
-                <td>{hw.description}</td>
 
-                <td>{hw.dueDate}</td>
+                <td className="p-3 border">
+                  {hw.title}
+                </td>
+
+
+                <td className="p-3 border">
+                  {hw.description}
+                </td>
+
+
+                <td className="p-3 border">
+                  {hw.dueDate}
+                </td>
+
+
+
+                <td className="p-3 border">
+
+
+                  <button
+                    onClick={() => {
+
+                      setEditId(hw.id);
+
+                      setFormData({
+                        title: hw.title,
+                        description: hw.description,
+                        subject: hw.subject,
+                        class: hw.class,
+                        dueDate: hw.dueDate
+                      });
+
+                    }}
+                    className="bg-yellow-500 text-white px-3 py-1 rounded mr-2"
+                  >
+                    Edit
+                  </button>
+
+
+
+                  <button
+                    onClick={() => handleDelete(hw.id)}
+                    className="bg-red-600 text-white px-3 py-1 rounded"
+                  >
+                    Delete
+                  </button>
+
+
+                </td>
+
 
               </tr>
 
             ))
           }
+
 
         </tbody>
 
@@ -188,5 +328,6 @@ function Homework() {
   );
 
 }
+
 
 export default Homework;

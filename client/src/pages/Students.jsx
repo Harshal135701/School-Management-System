@@ -15,14 +15,17 @@ function Students() {
     });
 
     useEffect(() => {
-        api.get("/students")
-            .then((response) => {
-                setStudents(response.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        fetchStudents();
     }, []);
+
+    const fetchStudents = async () => {
+        try {
+            const response = await api.get("/students");
+            setStudents(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const handleChange = (e) => {
         setFormData({
@@ -44,34 +47,17 @@ function Students() {
                 parentMobile: "",
                 address: ""
             });
-
-            const response = await api.get("/students");
-            setStudents(response.data);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const handleDelete = async (id) => {
-        try {
-            await api.delete(`/students/${id}`);
-            const response = await api.get("/students");
-            setStudents(response.data);
+            fetchStudents();
         } catch (error) {
             console.log(error);
         }
     };
 
     const handleUpdate = async (e) => {
-
         e.preventDefault();
-
         try {
-
             await api.put(`/students/${editId}`, formData);
-
             setEditId(null);
-
             setFormData({
                 firstName: "",
                 lastName: "",
@@ -81,19 +67,19 @@ function Students() {
                 parentMobile: "",
                 address: ""
             });
-
-
-            const response = await api.get("/students");
-
-            setStudents(response.data);
-
-
+            fetchStudents();
         } catch (error) {
-
             console.log(error);
-
         }
+    };
 
+    const handleDelete = async (id) => {
+        try {
+            await api.delete(`/students/${id}`);
+            fetchStudents();
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -102,9 +88,9 @@ function Students() {
                 Students Management
             </h1>
 
-            {/* Form to Add Student */}
             <form
                 onSubmit={editId ? handleUpdate : handleSubmit}
+                className="bg-white shadow rounded-lg p-6 grid grid-cols-1 md:grid-cols-2 gap-4"
             >
                 <input
                     name="firstName"
@@ -162,18 +148,14 @@ function Students() {
                     className="border p-2 rounded md:col-span-2"
                 />
 
-                {/* Submit Button */}
-                <div className="md:col-span-2">
-                    <button
-                        type="submit"
-                        className="bg-blue-600 text-white px-4 py-2 rounded font-semibold"
-                    >
-                        {editId ? "Update Student" : "Add Student"}
-                    </button>
-                </div>
+                <button
+                    type="submit"
+                    className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 md:col-span-2"
+                >
+                    {editId ? "Update Student" : "Add Student"}
+                </button>
             </form>
 
-            {/* Students Table */}
             <table className="w-full bg-white shadow rounded-lg overflow-hidden">
                 <thead>
                     <tr>
@@ -191,18 +173,10 @@ function Students() {
                             <td className="p-3 border">{student.firstName} {student.lastName}</td>
                             <td className="p-3 border">{student.class}</td>
                             <td className="p-3 border">{student.section}</td>
-                            <td className="p-3 border text-center">
-                                <button
-                                    onClick={() => handleDelete(student.id)}
-                                    className="bg-red-600 text-white px-3 py-1 rounded"
-                                >
-                                    Delete
-                                </button>
+                            <td className="p-3 border">
                                 <button
                                     onClick={() => {
-
                                         setEditId(student.id);
-
                                         setFormData({
                                             firstName: student.firstName,
                                             lastName: student.lastName,
@@ -212,11 +186,17 @@ function Students() {
                                             parentMobile: student.parentMobile,
                                             address: student.address
                                         });
-
                                     }}
                                     className="bg-yellow-500 text-white px-3 py-1 rounded mr-2"
                                 >
                                     Edit
+                                </button>
+
+                                <button
+                                    onClick={() => handleDelete(student.id)}
+                                    className="bg-red-600 text-white px-3 py-1 rounded"
+                                >
+                                    Delete
                                 </button>
                             </td>
                         </tr>
