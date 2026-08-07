@@ -3,6 +3,7 @@ import api from "../api/axios";
 
 function Students() {
     const [students, setStudents] = useState([]);
+    const [search, setSearch] = useState("");
     const [editId, setEditId] = useState(null);
     const [formData, setFormData] = useState({
         firstName: "",
@@ -16,11 +17,11 @@ function Students() {
 
     useEffect(() => {
         fetchStudents();
-    }, []);
+    }, [search]);
 
     const fetchStudents = async () => {
         try {
-            const response = await api.get("/students");
+            const response = await api.get(`/students?search=${search}`);
             setStudents(response.data);
         } catch (error) {
             console.log(error);
@@ -203,6 +204,17 @@ function Students() {
                     ))}
                 </tbody>
             </table>
+            <div className="mb-4">
+
+                <input
+                    type="text"
+                    placeholder="Search by Name or Admission Number..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="border p-2 rounded w-full md:w-96"
+                />
+
+            </div>
         </div>
     );
 }

@@ -7,16 +7,18 @@ const {
   addHomework,
   getHomework,
   updateHomework,
-  deleteHomework
+  publishHomework,
+  deleteHomework,
 } = require("../controller/homeworkController");
 
-router.post("/",upload.single("attachment"), addHomework);
- 
+router.post("/", upload.single("attachment"), addHomework);
 
-router.get("/",getHomework);
+
+router.get("/", getHomework);
 
 router.put("/:id", updateHomework);
+router.put("/:id/publish", publishHomework);
 
-router.delete("/:id",deleteHomework);
+router.delete("/:id", deleteHomework);
 
 module.exports = router;

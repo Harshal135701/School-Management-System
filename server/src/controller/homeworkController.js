@@ -89,7 +89,37 @@ const deleteHomework = async (req, res) => {
 
 };
 
+const publishHomework = async (req, res) => {
+  try {
+
+    const homework = await Homework.findByPk(req.params.id);
+
+    if (!homework) {
+      return res.status(404).json({
+        message: "Homework not found"
+      });
+    }
+
+    await homework.update({
+      published: true
+    });
+
+    res.json({
+      message: "Homework published successfully",
+      homework
+    });
+
+  } catch (error) {
+
+    res.status(500).json({
+      message: error.message
+    });
+
+  }
+};
+
 module.exports = {
+  publishHomework,
   addHomework,
   getHomework,
   updateHomework,
