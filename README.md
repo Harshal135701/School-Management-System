@@ -135,7 +135,7 @@ No direct download button is provided for attachments.
 
 ## Login Page
 
-![Login](screenshots/login.png)
+![Login](screenShots/login.png)
 
 
 ## Dashboard
