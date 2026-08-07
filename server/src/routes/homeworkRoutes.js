@@ -11,11 +11,15 @@ const {
 const {
   addHomework,
   getHomework,
+  getPublishedHomework,
   updateHomework,
   publishHomework,
   deleteHomework,
 } = require("../controller/homeworkController");
 
+
+router.get("/parent", getPublishedHomework);
+router.get("/", getHomework);
 router.post(
   "/",
   upload.single("attachment"),
@@ -32,7 +36,6 @@ router.put(
   updateHomework
 );
 
-router.get("/", getHomework);
 router.put("/:id/publish", publishHomework);
 
 router.delete("/:id", deleteHomework);

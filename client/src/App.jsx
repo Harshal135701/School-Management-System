@@ -7,6 +7,7 @@ import Teachers from "./pages/Teachers";
 import Homework from "./pages/Homework";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ParentPortal from "./pages/ParentPortal";
 
 function App() {
 
@@ -40,6 +41,11 @@ function App() {
           <Route
             path="/homework"
             element={<Homework />}
+          />
+
+          <Route
+            path="/parent"
+            element={<ParentPortal />}
           />
 
           <Route path="/login" element={<Login />} />

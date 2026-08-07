@@ -121,10 +121,46 @@ const publishHomework = async (req, res) => {
   }
 };
 
+const getPublishedHomework = async (req, res) => {
+  try {
+    const { search, subject, class: studentClass } = req.query;
+
+    const where = {
+      published: true,
+    };
+
+    if (search) {
+      where.title = {
+        [require("sequelize").Op.iLike]: `%${search}%`,
+      };
+    }
+
+    if (subject) {
+      where.subject = subject;
+    }
+
+    if (studentClass) {
+      where.class = studentClass;
+    }
+
+    const homework = await Homework.findAll({
+      where,
+      order: [["createdAt", "DESC"]],
+    });
+
+    res.json(homework);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   publishHomework,
   addHomework,
   getHomework,
+  getPublishedHomework,
   updateHomework,
-  deleteHomework
+  deleteHomework,
 };
